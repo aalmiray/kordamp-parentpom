@@ -1,0 +1,18 @@
+= kordamp-parentpom
+:linkattrs:
+:project-owner:   aalmiray
+:project-repo:    kordamp
+:project-name:    kordamp-parentpom
+:project-group:   org.kordamp.gradle
+:project-version: 1.0.0
+
+image:http://img.shields.io/travis/aalmiray/{project-name}/master.svg["Build Status (travis)", link="https://travis-ci.org/aalmiray/{project-name}"]
+image:http://img.shields.io/badge/license-ASL2-blue.svg["ASL2 Licensed", link="http://opensource.org/licenses/ASL2"]
+image:https://api.bintray.com/packages/{project-owner}/{project-repo}/{project-name}/images/download.svg[link="https://bintray.com/{project-owner}/{project-repo}/{project-name}/_latestVersion"]
+image:https://img.shields.io/badge/donations-Patreon-orange.svg[link="https://www.patreon.com/user?u=6609318"]
+
+---
+
+Defines the parent POM for all Kordamp related projects.
+
+See link:http://andresalmiray.com/the-gradle-pom/[The Gradle POM] and link:http://andresalmiray.com/the-gradle-superpom/[The Gradle SuperPOM] for more information on this technique.
