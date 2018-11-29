@@ -28,10 +28,10 @@ class KordampParentPomPlugin implements Plugin<Project> {
         project.plugins.apply(ProjectPlugin)
         project.plugins.apply(BintrayPlugin)
 
-        if (!project.hasProperty('bintrayUsername'))  ext.bintrayUsername  = '**undefined**'
-        if (!project.hasProperty('bintrayApiKey'))    ext.bintrayApiKey    = '**undefined**'
-        if (!project.hasProperty('sonatypeUsername')) ext.sonatypeUsername = '**undefined**'
-        if (!project.hasProperty('sonatypePassword')) ext.sonatypePassword = '**undefined**'
+        if (!project.hasProperty('bintrayUsername'))  project.ext.bintrayUsername  = '**undefined**'
+        if (!project.hasProperty('bintrayApiKey'))    project.ext.bintrayApiKey    = '**undefined**'
+        if (!project.hasProperty('sonatypeUsername')) project.ext.sonatypeUsername = '**undefined**'
+        if (!project.hasProperty('sonatypePassword')) project.ext.sonatypePassword = '**undefined**'
 
         project.extensions.findByType(ProjectConfigurationExtension).with {
             release = (project.rootProject.findProperty('release') ?: false).toBoolean()
