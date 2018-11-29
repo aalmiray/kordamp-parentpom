@@ -103,7 +103,6 @@ gradlePlugin {
 }
 
 bintray {
-    publications += ['parentpomPluginPluginMarkerMaven', 'pluginMaven']
     pkg {
         version {
             attributes = ['gradle-plugin': "${project.pluginId}:${project.group}:${project.name}"]
