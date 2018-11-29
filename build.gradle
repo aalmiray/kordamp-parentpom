@@ -23,8 +23,8 @@ plugins {
     id 'org.kordamp.gradle.bintray'  version '0.9.0'
 }
 
-if (!project.hasProperty('bintrayUsername')) ext.bintrayUsername = ''
-if (!project.hasProperty('bintrayApiKey'))   ext.bintrayApiKey = ''
+if (!project.hasProperty('bintrayUsername')) ext.bintrayUsername = '**undefined**'
+if (!project.hasProperty('bintrayApiKey'))   ext.bintrayApiKey   = '**undefined**'
 
 config {
     release = (rootProject.findProperty('release') ?: false).toBoolean()
@@ -103,6 +103,7 @@ gradlePlugin {
 }
 
 bintray {
+    publications += ['parentpomPluginPluginMarkerMaven', 'pluginMaven']
     pkg {
         version {
             attributes = ['gradle-plugin': "${project.pluginId}:${project.group}:${project.name}"]
