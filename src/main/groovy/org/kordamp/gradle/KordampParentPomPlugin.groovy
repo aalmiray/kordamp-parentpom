@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.acme.gradle
+package org.kordamp.gradle
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -23,6 +23,9 @@ import org.kordamp.gradle.plugin.bintray.BintrayPlugin
 import org.kordamp.gradle.plugin.project.ProjectPlugin
 import org.kordamp.gradle.plugin.base.ProjectConfigurationExtension
 
+/**
+ * @author Andres Almiray
+ */
 class KordampParentPomPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.plugins.apply(ProjectPlugin)
