@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2018 Andres Almiray.
+ * Copyright 2018-2019 Andres Almiray.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,8 @@
 
 plugins {
     id 'groovy'
-    id 'java-gradle-plugin'
-    id 'org.kordamp.gradle.project'  version '0.12.0'
-    id 'org.kordamp.gradle.bintray'  version '0.12.0'
+    id 'org.kordamp.gradle.project' version '0.16.0-SNAPSHOT'
+    id 'org.kordamp.gradle.plugin'  version '0.16.0-SNAPSHOT'
 }
 
 if (!project.hasProperty('bintrayUsername')) ext.bintrayUsername = '**undefined**'
@@ -30,10 +29,11 @@ config {
     release = (rootProject.findProperty('release') ?: false).toBoolean()
 
     info {
-        name          = 'kordamp-parentpom'
-        description   = 'Parent POM for kordamp projects'
+        name          = 'Kordamp parent POM'
+        description   = 'Parent POM for Kordamp projects'
         vendor        = 'Kordamp'
         inceptionYear = '2018'
+        tags          = ['kordamp', 'pom']
 
         links {
             website      = 'https://github.com/aalmiray/kordamp-parentpom'
@@ -57,11 +57,11 @@ config {
     groovydoc {
         replaceJavadoc = true
         options {
-            link 'https://docs.gradle.org/4.0/javadoc/', 'org.gradle.'
+            link 'https://docs.gradle.org/5.0/javadoc/', 'org.gradle.'
         }
     }
 
-    license {
+    licensing {
         licenses {
             license {
                 id = 'Apache-2.0'
@@ -70,14 +70,26 @@ config {
     }
 
     bintray {
-        enabled = true
+        enabled      = true
+        repo         = 'kordamp'
+        userOrg      = 'aalmiray'
+        name         = rootProject.name
         credentials {
             username = project.bintrayUsername
             password = project.bintrayApiKey
         }
-        repo    = 'kordamp'
-        userOrg = 'aalmiray'
-        name    = rootProject.name
+    }
+
+    plugin {
+        enabled             = true
+        id                  = project.pluginId
+        implementationClass = 'org.kordamp.gradle.KordampParentPomPlugin'
+    }
+}
+
+normalization {
+    runtimeClasspath {
+        ignore('/META-INF/MANIFEST.MF')
     }
 }
 
@@ -89,22 +101,5 @@ repositories {
 dependencies {
     compile gradleApi()
 
-    compile 'org.kordamp.gradle:project-gradle-plugin:0.12.0'
-}
-
-gradlePlugin {
-    plugins {
-        parentpomPlugin {
-            id                  = project.pluginId
-            implementationClass = 'org.kordamp.gradle.KordampParentPomPlugin'
-        }
-    }
-}
-
-bintray {
-    pkg {
-        version {
-            attributes = ['gradle-plugin': "${project.pluginId}:${project.group}:${project.name}"]
-        }
-    }
+    compile 'org.kordamp.gradle:project-gradle-plugin:0.15.1'
 }

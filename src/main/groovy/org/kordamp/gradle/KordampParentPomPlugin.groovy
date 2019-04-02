@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2018 Andres Almiray.
+ * Copyright 2018-2019 Andres Almiray.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ class KordampParentPomPlugin implements Plugin<Project> {
                 }
             }
 
-            license {
+            licensing {
                 licenses {
                     license {
                         id = 'Apache-2.0'
@@ -82,6 +82,12 @@ class KordampParentPomPlugin implements Plugin<Project> {
                 jcenter()
                 mavenCentral()
                 mavenLocal()
+            }
+
+            normalization {
+                runtimeClasspath {
+                    ignore('/META-INF/MANIFEST.MF')
+                }
             }
         }
     }
