@@ -9,4 +9,4 @@ before_script:
 script:
     - TERM=dumb ./gradlew build --scan
 jdk:
-    - oraclejdk8
+    - openjdk8
