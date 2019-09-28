@@ -23,7 +23,6 @@ import org.gradle.api.tasks.compile.GroovyCompile
 import org.gradle.api.tasks.compile.JavaCompile
 import org.kordamp.gradle.plugin.base.ProjectConfigurationExtension
 import org.kordamp.gradle.plugin.bintray.BintrayPlugin
-import org.kordamp.gradle.plugin.buildscan.BuildScanPlugin
 import org.kordamp.gradle.plugin.project.ProjectPlugin
 
 /**
@@ -32,15 +31,12 @@ import org.kordamp.gradle.plugin.project.ProjectPlugin
 class KordampParentPomPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.plugins.apply(ProjectPlugin)
-        project.plugins.apply(BuildScanPlugin)
         project.plugins.apply(BintrayPlugin)
 
         if (!project.hasProperty('bintrayUsername'))  project.ext.bintrayUsername  = '**undefined**'
         if (!project.hasProperty('bintrayApiKey'))    project.ext.bintrayApiKey    = '**undefined**'
         if (!project.hasProperty('sonatypeUsername')) project.ext.sonatypeUsername = '**undefined**'
         if (!project.hasProperty('sonatypePassword')) project.ext.sonatypePassword = '**undefined**'
-
-        project.buildScan.termsOfServiceAgree = 'yes'
 
         project.extensions.findByType(ProjectConfigurationExtension).with {
             release = (project.rootProject.findProperty('release') ?: false).toBoolean()

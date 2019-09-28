@@ -18,17 +18,12 @@
 
 plugins {
     id 'groovy'
-    id 'org.kordamp.gradle.project'    version '0.18.0'
-    id 'org.kordamp.gradle.plugin'     version '0.18.0'
-    id 'org.kordamp.gradle.build-scan' version '0.18.0'
+    id 'org.kordamp.gradle.project' version '0.27.0'
+    id 'org.kordamp.gradle.plugin'  version '0.27.0'
 }
 
 if (!project.hasProperty('bintrayUsername')) ext.bintrayUsername = '**undefined**'
 if (!project.hasProperty('bintrayApiKey'))   ext.bintrayApiKey   = '**undefined**'
-
-buildScan {
-    termsOfServiceAgree = 'yes'
-}
 
 config {
     release = (rootProject.findProperty('release') ?: false).toBoolean()
@@ -106,6 +101,5 @@ repositories {
 dependencies {
     compile gradleApi()
 
-    compile 'org.kordamp.gradle:project-gradle-plugin:0.18.0'
-    compile 'org.kordamp.gradle:buildscan-gradle-plugin:0.18.0'
+    compile 'org.kordamp.gradle:project-gradle-plugin:0.27.0'
 }
