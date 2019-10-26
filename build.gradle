@@ -18,8 +18,9 @@
 
 plugins {
     id 'groovy'
-    id 'org.kordamp.gradle.project' version '0.28.0'
-    id 'org.kordamp.gradle.plugin'  version '0.28.0'
+    id 'groovy-base'
+    id 'org.kordamp.gradle.project' version '0.29.0'
+    id 'org.kordamp.gradle.plugin'  version '0.29.0'
 }
 
 if (!project.hasProperty('bintrayUsername')) ext.bintrayUsername = '**undefined**'
@@ -52,6 +53,17 @@ config {
                 roles = ['developer']
             }
         }
+
+        repositories {
+            repository {
+                name = 'stagingRelease'
+                url  = "${project.rootProject.buildDir}/repos/staging/release"
+            }
+            repository {
+                name = 'stagingSnapshot'
+                url  = "${project.rootProject.buildDir}/repos/staging/snapshot"
+            }
+        }
     }
 
     groovydoc {
@@ -80,6 +92,12 @@ config {
         }
     }
 
+    publishing {
+        signing             = false
+        releasesRepository  = 'stagingRelease'
+        snapshotsRepository = 'stagingSnapshot'
+    }
+
     plugin {
         enabled             = true
         id                  = project.pluginId
@@ -96,12 +114,13 @@ normalization {
 repositories {
     jcenter()
     gradlePluginPortal()
+    mavenLocal()
 }
 
 dependencies {
     compile gradleApi()
 
-    compile 'org.kordamp.gradle:project-gradle-plugin:0.28.0'
+    compile 'org.kordamp.gradle:project-gradle-plugin:0.29.0'
 }
 
 task publishRelease(dependsOn: [bintrayUpload, publishPlugins]) {}

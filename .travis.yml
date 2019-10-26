@@ -7,6 +7,6 @@ cache:
 before_script:
     - ./gradlew --version
 script:
-    - TERM=dumb ./gradlew build --scan
+    - TERM=dumb ./gradlew build
 jdk:
     - openjdk8
