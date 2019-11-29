@@ -19,8 +19,8 @@
 plugins {
     id 'groovy'
     id 'groovy-base'
-    id 'org.kordamp.gradle.project' version '0.29.0'
-    id 'org.kordamp.gradle.plugin'  version '0.29.0'
+    id 'org.kordamp.gradle.groovy-project' version '0.30.0'
+    id 'org.kordamp.gradle.plugin'         version '0.30.0'
 }
 
 if (!project.hasProperty('bintrayUsername')) ext.bintrayUsername = '**undefined**'
@@ -114,13 +114,12 @@ normalization {
 repositories {
     jcenter()
     gradlePluginPortal()
-    mavenLocal()
 }
 
 dependencies {
     compile gradleApi()
 
-    compile 'org.kordamp.gradle:project-gradle-plugin:0.29.0'
+    compile 'org.kordamp.gradle:java-project-gradle-plugin:0.30.0'
 }
 
 task publishRelease(dependsOn: [bintrayUpload, publishPlugins]) {}

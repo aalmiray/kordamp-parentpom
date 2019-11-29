@@ -23,14 +23,14 @@ import org.gradle.api.tasks.compile.GroovyCompile
 import org.gradle.api.tasks.compile.JavaCompile
 import org.kordamp.gradle.plugin.base.ProjectConfigurationExtension
 import org.kordamp.gradle.plugin.bintray.BintrayPlugin
-import org.kordamp.gradle.plugin.project.ProjectPlugin
+import org.kordamp.gradle.plugin.project.java.JavaProjectPlugin
 
 /**
  * @author Andres Almiray
  */
 class KordampParentPomPlugin implements Plugin<Project> {
     void apply(Project project) {
-        project.plugins.apply(ProjectPlugin)
+        project.plugins.apply(JavaProjectPlugin)
         project.plugins.apply(BintrayPlugin)
 
         if (!project.hasProperty('bintrayUsername'))  project.ext.bintrayUsername  = '**undefined**'
@@ -50,6 +50,12 @@ class KordampParentPomPlugin implements Plugin<Project> {
                     scm          = "https://github.com/aalmiray/${project.rootProject.name}.git"
                 }
 
+                scm {
+                    url                 = "https://github.com/aalmiray/${project.rootProject.name}"
+                    connection          = "scm:git:https://github.com/aalmiray/${project.rootProject.name}.git"
+                    developerConnection = "scm:git:git@github.com:aalmiray/${project.rootProject.name}.git"
+                }
+
                 people {
                     person {
                         id    = 'aalmiray'
@@ -62,6 +68,17 @@ class KordampParentPomPlugin implements Plugin<Project> {
                     sonatype {
                         username = project.sonatypeUsername
                         password = project.sonatypePassword
+                    }
+                }
+
+                repositories {
+                    repository {
+                        name = 'stagingRelease'
+                        url  = "${project.rootProject.buildDir}/repos/staging/release"
+                    }
+                    repository {
+                        name = 'stagingSnapshot'
+                        url  = "${project.rootProject.buildDir}/repos/staging/snapshot"
                     }
                 }
             }
@@ -88,6 +105,11 @@ class KordampParentPomPlugin implements Plugin<Project> {
                 userOrg = 'aalmiray'
                 name    = project.rootProject.name
             }
+
+            publishing {
+                releasesRepository  = 'stagingRelease'
+                snapshotsRepository = 'stagingSnapshot'
+            }
         }
 
         project.allprojects {
@@ -99,6 +121,19 @@ class KordampParentPomPlugin implements Plugin<Project> {
             normalization {
                 runtimeClasspath {
                     ignore('/META-INF/MANIFEST.MF')
+                }
+            }
+
+            dependencyUpdates.resolutionStrategy = {
+                componentSelection { rules ->
+                    rules.all { selection ->
+                        boolean rejected = ['alpha', 'beta', 'rc', 'cr'].any { qualifier ->
+                            selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+                        }
+                        if (rejected) {
+                            selection.reject('Release candidate')
+                        }
+                    }
                 }
             }
         }
