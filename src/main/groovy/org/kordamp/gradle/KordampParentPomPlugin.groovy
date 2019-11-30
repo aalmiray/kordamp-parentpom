@@ -128,7 +128,7 @@ class KordampParentPomPlugin implements Plugin<Project> {
                 componentSelection { rules ->
                     rules.all { selection ->
                         boolean rejected = ['alpha', 'beta', 'rc', 'cr'].any { qualifier ->
-                            selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+                            selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*.*/
                         }
                         if (rejected) {
                             selection.reject('Release candidate')
