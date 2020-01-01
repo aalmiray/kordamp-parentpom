@@ -121,7 +121,6 @@ normalization {
 repositories {
     jcenter()
     gradlePluginPortal()
-	mavenLocal()
 }
 
 dependencies {
