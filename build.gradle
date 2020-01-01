@@ -18,8 +18,8 @@
 plugins {
     id 'java-library'
     id 'groovy'
-    id 'org.kordamp.gradle.groovy-project' version '0.31.0'
-    id 'org.kordamp.gradle.plugin'         version '0.31.0'
+    id 'org.kordamp.gradle.groovy-project' version '0.31.1'
+    id 'org.kordamp.gradle.plugin'         version '0.31.1'
 }
 
 if (!project.hasProperty('bintrayUsername')) ext.bintrayUsername = '**undefined**'
@@ -126,7 +126,7 @@ repositories {
 dependencies {
     compileOnly gradleApi()
 
-    api 'org.kordamp.gradle:java-project-gradle-plugin:0.31.0'
+    api 'org.kordamp.gradle:java-project-gradle-plugin:0.31.1'
 }
 
 task publishRelease(dependsOn: [bintrayUpload, publishPlugins]) {}
