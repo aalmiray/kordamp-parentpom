@@ -128,5 +128,3 @@ dependencies {
 
     api 'org.kordamp.gradle:java-project-gradle-plugin:0.31.1'
 }
-
-task publishRelease(dependsOn: [bintrayUpload, publishPlugins]) {}
