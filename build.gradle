@@ -19,8 +19,8 @@
 plugins {
     id 'java-library'
     id 'groovy'
-    id 'org.kordamp.gradle.groovy-project' version '0.30.4'
-    id 'org.kordamp.gradle.plugin'         version '0.30.4'
+    id 'org.kordamp.gradle.groovy-project' version '0.31.0'
+    id 'org.kordamp.gradle.plugin'         version '0.31.0'
 }
 
 if (!project.hasProperty('bintrayUsername')) ext.bintrayUsername = '**undefined**'
@@ -37,9 +37,9 @@ config {
         tags          = ['kordamp', 'pom']
 
         links {
-            website      = 'https://github.com/aalmiray/kordamp-parentpom'
-            issueTracker = 'https://github.com/aalmiray/kordamp-parentpom/issues'
-            scm          = 'https://github.com/aalmiray/kordamp-parentpom.git'
+            website      = 'https://github.com/kordamp/kordamp-parentpom'
+            issueTracker = 'https://github.com/kordamp/kordamp-parentpom/issues'
+            scm          = 'https://github.com/kordamp/kordamp-parentpom.git'
         }
 
         specification  { enabled = false }
@@ -50,28 +50,35 @@ config {
             person {
                 id    = 'aalmiray'
                 name  = 'Andres Almiray'
+                url   = 'http://andresalmiray.com/'
                 roles = ['developer']
+                properties = [
+                    twitter: 'aalmiray',
+                    github : 'aalmiray'
+                ]
             }
         }
 
         repositories {
             repository {
-                name = 'stagingRelease'
-                url  = "${project.rootProject.buildDir}/repos/staging/release"
+                name = 'localRelease'
+                url  = "${project.rootProject.buildDir}/repos/local/release"
             }
             repository {
-                name = 'stagingSnapshot'
-                url  = "${project.rootProject.buildDir}/repos/staging/snapshot"
+                name = 'localSnapshot'
+                url  = "${project.rootProject.buildDir}/repos/local/snapshot"
             }
         }
     }
 
-    groovydoc {
-        replaceJavadoc = true
-        options {
-            link 'https://docs.gradle.org/5.0/javadoc/', 'org.gradle.'
+	docs {
+        groovydoc {
+            replaceJavadoc = true
+            options {
+                link 'https://docs.gradle.org/5.0/javadoc/', 'org.gradle.'
+            }
         }
-    }
+	}
 
     licensing {
         licenses {
@@ -83,9 +90,10 @@ config {
 
     bintray {
         enabled      = true
-        repo         = 'kordamp'
-        userOrg      = 'aalmiray'
+        userOrg      = 'kordamp'
+        repo         = 'maven'
         name         = rootProject.name
+        publish      = config.release
         credentials {
             username = project.bintrayUsername
             password = project.bintrayApiKey
@@ -94,8 +102,8 @@ config {
 
     publishing {
         signing             = false
-        releasesRepository  = 'stagingRelease'
-        snapshotsRepository = 'stagingSnapshot'
+        releasesRepository  = 'localRelease'
+        snapshotsRepository = 'localSnapshot'
     }
 
     plugin {
@@ -114,12 +122,13 @@ normalization {
 repositories {
     jcenter()
     gradlePluginPortal()
+	mavenLocal()
 }
 
 dependencies {
     compileOnly gradleApi()
 
-    api 'org.kordamp.gradle:java-project-gradle-plugin:0.30.4'
+    api 'org.kordamp.gradle:java-project-gradle-plugin:0.31.0'
 }
 
 task publishRelease(dependsOn: [bintrayUpload, publishPlugins]) {}

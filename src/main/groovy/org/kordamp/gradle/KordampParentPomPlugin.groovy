@@ -45,22 +45,27 @@ class KordampParentPomPlugin implements Plugin<Project> {
                 vendor = 'Kordamp'
 
                 links {
-                    website      = "https://github.com/aalmiray/${project.rootProject.name}"
-                    issueTracker = "https://github.com/aalmiray/${project.rootProject.name}/issues"
-                    scm          = "https://github.com/aalmiray/${project.rootProject.name}.git"
+                    website      = "https://github.com/kordamp/${project.rootProject.name}"
+                    issueTracker = "https://github.com/kordamp/${project.rootProject.name}/issues"
+                    scm          = "https://github.com/kordamp/${project.rootProject.name}.git"
                 }
 
                 scm {
-                    url                 = "https://github.com/aalmiray/${project.rootProject.name}"
-                    connection          = "scm:git:https://github.com/aalmiray/${project.rootProject.name}.git"
-                    developerConnection = "scm:git:git@github.com:aalmiray/${project.rootProject.name}.git"
+                    url                 = "https://github.com/kordamp/${project.rootProject.name}"
+                    connection          = "scm:git:https://github.com/kordamp/${project.rootProject.name}.git"
+                    developerConnection = "scm:git:git@github.com:kordamp/${project.rootProject.name}.git"
                 }
 
                 people {
                     person {
                         id    = 'aalmiray'
                         name  = 'Andres Almiray'
-                        roles = ['developer', 'author']
+                        url   = 'http://andresalmiray.com/'
+                        roles = ['developer']
+                        properties = [
+                            twitter: 'aalmiray',
+                            github : 'aalmiray'
+                        ]
                     }
                 }
 
@@ -73,12 +78,12 @@ class KordampParentPomPlugin implements Plugin<Project> {
 
                 repositories {
                     repository {
-                        name = 'stagingRelease'
-                        url  = "${project.rootProject.buildDir}/repos/staging/release"
+                        name = 'localRelease'
+                        url  = "${project.rootProject.buildDir}/repos/local/release"
                     }
                     repository {
-                        name = 'stagingSnapshot'
-                        url  = "${project.rootProject.buildDir}/repos/staging/snapshot"
+                        name = 'localSnapshot'
+                        url  = "${project.rootProject.buildDir}/repos/local/snapshot"
                     }
                 }
             }
@@ -91,9 +96,14 @@ class KordampParentPomPlugin implements Plugin<Project> {
                 }
             }
 
-            javadoc {
-                excludes = ['**/*.html', 'META-INF/**']
-            }
+            docs {
+                javadoc {
+                    excludes = ['**/*.html', 'META-INF/**']
+                }
+                sourceXref {
+                    inputEncoding = 'UTF-8'
+                }
+		    }
 
             bintray {
                 enabled = true
@@ -101,14 +111,15 @@ class KordampParentPomPlugin implements Plugin<Project> {
                     username = project.bintrayUsername
                     password = project.bintrayApiKey
                 }
-                repo    = 'kordamp'
-                userOrg = 'aalmiray'
+                userOrg = 'kordamp'
+                repo    = 'maven'
                 name    = project.rootProject.name
+				publish = (project.rootProject.findProperty('release') ?: false).toBoolean()
             }
 
             publishing {
-                releasesRepository  = 'stagingRelease'
-                snapshotsRepository = 'stagingSnapshot'
+                releasesRepository  = 'localRelease'
+                snapshotsRepository = 'localSnapshot'
             }
         }
 
@@ -136,6 +147,10 @@ class KordampParentPomPlugin implements Plugin<Project> {
                     }
                 }
             }
+
+			configurations.all {
+				resolutionStrategy.failOnVersionConflict()
+			}
         }
 
         project.allprojects { Project p ->
