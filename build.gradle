@@ -18,8 +18,8 @@
 plugins {
     id 'java-library'
     id 'groovy'
-    id 'org.kordamp.gradle.groovy-project' version '0.31.1'
-    id 'org.kordamp.gradle.plugin'         version '0.31.1'
+    id 'org.kordamp.gradle.groovy-project'
+    id 'org.kordamp.gradle.plugin'
 }
 
 if (!project.hasProperty('bintrayUsername')) ext.bintrayUsername = '**undefined**'
@@ -107,7 +107,7 @@ config {
 
     plugin {
         enabled             = true
-        id                  = project.pluginId
+        id                  = 'org.kordamp.gradle.kordamp-parentpom'
         implementationClass = 'org.kordamp.gradle.KordampParentPomPlugin'
     }
 }
@@ -121,10 +121,11 @@ normalization {
 repositories {
     jcenter()
     gradlePluginPortal()
+    mavenLocal()
 }
 
 dependencies {
     compileOnly gradleApi()
 
-    api 'org.kordamp.gradle:java-project-gradle-plugin:0.31.1'
+    api "org.kordamp.gradle:java-project-gradle-plugin:$kordampPluginVersion"
 }
