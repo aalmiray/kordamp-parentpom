@@ -19,7 +19,7 @@ pluginManagement {
     repositories {
         jcenter()
         gradlePluginPortal()
-		mavenLocal()
+        mavenLocal()
     }
     plugins {
         id 'org.kordamp.gradle.groovy-project' version kordampPluginVersion

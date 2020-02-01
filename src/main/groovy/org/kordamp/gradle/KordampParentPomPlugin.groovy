@@ -103,7 +103,7 @@ class KordampParentPomPlugin implements Plugin<Project> {
                 sourceXref {
                     inputEncoding = 'UTF-8'
                 }
-		    }
+            }
 
             bintray {
                 enabled = true
@@ -114,7 +114,7 @@ class KordampParentPomPlugin implements Plugin<Project> {
                 userOrg = 'kordamp'
                 repo    = 'maven'
                 name    = project.rootProject.name
-				publish = (project.rootProject.findProperty('release') ?: false).toBoolean()
+                publish = (project.rootProject.findProperty('release') ?: false).toBoolean()
             }
 
             publishing {
@@ -148,9 +148,9 @@ class KordampParentPomPlugin implements Plugin<Project> {
                 }
             }
 
-			configurations.all {
-				resolutionStrategy.failOnVersionConflict()
-			}
+            configurations.all {
+                resolutionStrategy.failOnVersionConflict()
+            }
         }
 
         project.allprojects { Project p ->
