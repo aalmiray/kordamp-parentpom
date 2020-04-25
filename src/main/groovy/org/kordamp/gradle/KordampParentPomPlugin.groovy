@@ -135,7 +135,7 @@ class KordampParentPomPlugin implements Plugin<Project> {
                 }
             }
 
-            dependencyUpdates.resolutionStrategy = {
+            dependencyUpdates.resolutionStrategy {
                 componentSelection { rules ->
                     rules.all { selection ->
                         boolean rejected = ['alpha', 'beta', 'rc', 'cr'].any { qualifier ->
@@ -146,10 +146,6 @@ class KordampParentPomPlugin implements Plugin<Project> {
                         }
                     }
                 }
-            }
-
-            configurations.all {
-                resolutionStrategy.failOnVersionConflict()
             }
         }
 
