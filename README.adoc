@@ -14,6 +14,8 @@ image:https://img.shields.io/badge/donations-Patreon-orange.svg[link="https://ww
 
 ---
 
+WARNING: This project has been merged with link:https://github.com/kordamp/kordamp-parent[] and as such it's not longer maintained here.
+
 Defines the parent POM for all Kordamp related projects.
 
 See link:http://andresalmiray.com/the-gradle-pom/[The Gradle POM] and link:http://andresalmiray.com/the-gradle-superpom/[The Gradle SuperPOM] for more information on this technique.
